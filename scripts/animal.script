@@ -1,0 +1,41 @@
+local states = { IDLE = 1, PETTED = 2, HIDDEN = 3 }
+local current_state = states.HIDDEN
+
+function init(self)
+	hide_animal()
+	msg.post(".", "acquire_input_focus")
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("show") then
+		show_animal()
+	elseif message_id == hash("hide") then
+		hide_animal()
+	end
+end
+
+function show_animal()
+	go.set("animal#sprite", "tint", vmath.vector4(1, 1, 1, 1))
+	current_state = states.IDLE
+	sound.play("animal#pop_sound")
+end
+
+function hide_animal()
+	go.set("animal#sprite", "tint", vmath.vector4(0, 0, 0, 0))
+	current_state = states.HIDDEN
+	sound.play("animal#pop_sound")
+end
+
+function on_input(self, action_id, action)
+	if action.released then
+		if action_id == hash("pet") and current_state == states.IDLE then
+			current_state = states.PETTED
+			sound.play("animal#pet_sound")
+			print("Животное поглажено!")
+		elseif action_id == hash("give") and current_state == states.PETTED then
+			print("Животное передано!")
+			msg.post(".", "hide")
+			msg.post("main:/table#table", "respawn")
+		end
+	end
+end

@@ -1,0 +1,16 @@
+key_trigger {
+  input: KEY_X
+  action: "pet"
+}
+key_trigger {
+  input: KEY_C
+  action: "give"
+}
+mouse_trigger {
+  input: MOUSE_BUTTON_LEFT
+  action: "pet"
+}
+mouse_trigger {
+  input: MOUSE_BUTTON_RIGHT
+  action: "give"
+}

@@ -1,0 +1,7 @@
+images {
+  image: "/sprites/chicken.png"
+}
+images {
+  image: "/sprites/vendors_table.png"
+}
+extrude_borders: 2

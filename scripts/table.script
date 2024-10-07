@@ -1,0 +1,21 @@
+local animal_timer = 5
+local animal_state = false  -- false = скрыто, true = показано
+
+function init(self)
+	animal_timer = 5
+end
+
+function update(self, dt)
+	animal_timer = animal_timer - dt
+	if animal_timer <= 0 and not animal_state then
+		animal_state = true
+		msg.post("animal", "show")
+	end
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("respawn") then
+		animal_timer = 5
+		animal_state = false
+	end
+end
